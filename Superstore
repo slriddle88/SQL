@@ -35,10 +35,11 @@ FROM superstore
 ORDER BY price DESC;
 
 #Show a statistic about prices.
-SELECT sum(price), item_id
+SELECT SUM(price), item_id
 FROM superstore
 GROUP BY item_id;
 
 #Show a statistic for price about the category "Kitchen Supplies"
-SELECT min(price), "Kitchen Supplies"
-FROM superstore;
+SELECT SUM(price), category
+FROM superstore
+WHERE category = "Kitchen Supplies";
