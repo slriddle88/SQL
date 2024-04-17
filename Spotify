@@ -1,0 +1,68 @@
+# For this project, I downloaded Spotify data for 2021.
+# Next, I created a table to insert the Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+# Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+# Then, I inserted the Spotify Data .csv into the table.
+
+# Next, I queryed the data using the following SQL. 
+
+# Which artist has the lowest loudness?
+SELECT artist_name, min(loudness)
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+LIMIT 1;
+
+# Which artist has the most instrumental songs?
+SELECT DISTINCT artist_name, COUNT(instrumentalness)
+FROM BIT_DB.Spotifydata
+GROUP BY instrumentalness
+LIMIT 1;
+
+# What are the average tempos for the following columns: Danceability, Popularity, Energy, Valence?
+SELECT avg(tempo), 
+danceability, 
+popularity, 
+energy, 
+valence
+FROM BIT_DB.Spotifydata
+GROUP BY tempo;
+
+# Which tracks have a popularity over 85 and a valence over .75?
+SELECT DISTINCT track_name,
+artist_name,
+popularity,
+valence
+FROM BIT_DB.Spotifydata
+WHERE popularity >= "85"
+AND valence >= ".75"
+GROUP BY track_name;
+
+# Which 10 songs have the most speech?
+SELECT DISTINCT track_name,
+artist_name,
+speechiness
+FROM  BIT_DB.Spotifydata
+ORDER BY speechiness desc
+LIMIT 10;
